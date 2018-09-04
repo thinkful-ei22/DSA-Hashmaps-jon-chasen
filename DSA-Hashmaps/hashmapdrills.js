@@ -138,4 +138,41 @@ const palindrome = string => {
   }
 }
 
-console.log(palindrome('race'));
+// console.log(palindrome('race'));
+
+
+//Anagram grouping//
+
+//input ['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']
+//output [['east', 'teas', 'eats'], ['cars', 'arcs'], ['acre', 'race']]
+//sort anagrams for same char push firstArr
+//push first into second
+
+const anagram = arr => {
+  let anagrams = new HashMap();
+  let firstArr = [];
+  let secArr = [];
+
+  for (let i=0; i<arr.length; i++){
+    let sorted = arr[i].split('').sort().join('');
+    try{
+      anagrams.set(sorted, [...anagrams.get(sorted), arr[i]]);
+      // console.log('Try block', ...anagrams.get(sorted));
+      console.log('Arr[i]', arr[i]);
+    }catch{
+      secArr.push(sorted);
+      anagrams.set(sorted, [arr[i]]);
+      // console.log('SecArr', secArr);
+      // console.log(anagrams);
+    }
+  }
+  for (let i=0; i<secArr.length; i++){
+    firstArr.push(anagrams.get(secArr[i]));
+    // console.log('First', firstArr);
+  }
+  return firstArr;
+}
+
+console.log(anagram(['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']));
+
+
