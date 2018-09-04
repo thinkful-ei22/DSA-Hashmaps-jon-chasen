@@ -23,12 +23,14 @@ class HashMap {
     }
 
     const index = this._findSlot(key);
+    if (!this._slots[index]) {
+      this.length++;
+    }
     this._slots[index] = {
       key,
       value,
       deleted: false
     };
-    this.length++;
   }
 
   remove(key) {
@@ -86,23 +88,54 @@ HashMap.SIZE_RATIO = 3;
 const main = () => {
   let lotr = new HashMap();
 
-  lotr.set('Hobbit', 'Bilbo');
-  lotr.set('Hobbit', 'Frodo');
-  lotr.set('Wizard', 'Gandolf');
-  lotr.set('Human', 'Aragon');
-  lotr.set('Elf', 'Legolas');
-  lotr.set('Maiar', 'The Necromancer');
-  lotr.set('Maiar', 'Sauron');
-  lotr.set('RingBearer', 'Gollum');
-  lotr.set('LadyOfLight', 'Galadriel');
-  lotr.set('HalfElven', 'Arwen');
-  lotr.set('Ent', 'Treebeard');
+  // lotr.set('Hobbit', 'Bilbo');
+  // lotr.set('Hobbit', 'Frodo');
+  // lotr.set('Wizard', 'Gandolf');
+  // lotr.set('Human', 'Aragon');
+  // lotr.set('Elf', 'Legolas');
+  // lotr.set('Maiar', 'The Necromancer');
+  // lotr.set('Maiar', 'Sauron');
+  // lotr.set('RingBearer', 'Gollum');
+  // lotr.set('LadyOfLight', 'Galadriel');
+  // lotr.set('HalfElven', 'Arwen');
+  // lotr.set('Ent', 'Treebeard');
 
   
 
-  console.log((JSON.stringify(lotr, null, 2)));
+  // console.log((JSON.stringify(lotr, null, 2)));
 
-  console.log(lotr.get('Maiar'));
+  // console.log(lotr.get('Maiar'));
 };
 
 main();
+
+
+// Palindrome
+
+const palindrome = string => {
+  let stringHashMap = new HashMap();
+  let odd = 0;
+  for (let i = 0; i < string.length; i++) {
+      try {
+          let charCount = stringHashMap.get(string[i]);
+          charCount ++;
+          if(charCount % 2 === 0) {
+              odd --;
+          } else {
+              odd++;
+          }
+          stringHashMap.set(string[i], charCount);
+      } catch {
+          stringHashMap.set(string[i], 1)
+          odd ++;
+      }
+  }
+  if (string.length % 2 === 0 && odd === 0
+      || string.length % 2 === 1 && odd === 1){
+      return true;
+  } else {
+      return false;
+  }
+}
+
+console.log(palindrome('race'));
